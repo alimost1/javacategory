@@ -1,0 +1,21 @@
+﻿version: "3"
+services:
+  docker-spring:
+    image: docker-spring
+    ports:
+      - "8080:8080"
+    networks:
+      - docker-spring
+    depends_on:
+      - mysqldb
+ 
+  mysqldb:
+    image: mysql:8
+    networks:
+      - docker-spring
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=product 
+
+networks:
+  docker-spring: 
