@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta charset="UTF-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<title>product</title>
+	<style type="text/css">
+.tableUpdated {
+	width: 90% !important;
+	margin: 17px 58px 0 !important;
+}
+
+.btnSpace {
+	margin: 17px;
+}
+</style>
+ 
+<script>
+function confirmer(){
+	return confirm("are sure you want to delet this product")
+}
+</script>
+</h:head>
+
+<h:body>
+	<h3>Product</h3>
+	<h:form id="forms" >
+		<h:inputHidden value="#{productBean2.operation}"></h:inputHidden>
+		<h:inputHidden value="#{productBean2.id}"></h:inputHidden>
+	
+		<h:dataTable value="#{productBean2.productlist}" var="o"
+			style="width:100%; border:1px solid #000">
+
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+				<h:link value="#{o.id}">
+				 <f:param name="id" value="#{o.id}"></f:param>
+				  <f:param name="operation" value="edit"></f:param>				 
+				</h:link>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Name</f:facet>
+				<h:inputText value="#{o.name}"></h:inputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Price</f:facet>
+				<h:inputText value="#{o.price}"></h:inputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Category</f:facet>
+				<h:inputText value="#{o.category.categoryname}"></h:inputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Active</f:facet>
+				<h:inputText value="#{o.active}"></h:inputText>
+			</h:column>
+			<h:column>
+			<h:commandButton value ="delete" onclick="return confirmer();" actionListener="#{productBean2.deletProduct}">
+			  <f:param name="id" value="#{o.id}"></f:param>
+			</h:commandButton>
+			</h:column>
+
+		</h:dataTable>
+
+		<h3>Add new products</h3>
+	
+		<h:commandButton value ="ShowForm" actionListener="#{productBean2.showFormAction}"></h:commandButton>
+		<h:panelGroup id="addProductForm" rendered="#{productBean2.showForm}">
+		
+		<h:outputLabel value="Name: " for="name"></h:outputLabel>
+		<h:inputText value="#{productBean2.name}" id="name"></h:inputText>
+		
+		<h:outputLabel value="Price : " for="price"></h:outputLabel>
+		<h:inputText value="#{productBean2.price}" id="price"></h:inputText>
+		
+		<h:outputLabel value="Category : for" for="category"></h:outputLabel>
+		<h:selectOneMenu id="category" value="#{productBean2.category}">
+			<f:selectItems value="#{productBean2.categorylist}"></f:selectItems>
+		</h:selectOneMenu>
+		<br></br>
+		<h:outputLabel value="Active : for" for="active"></h:outputLabel>
+		<h:selectOneRadio value="#{productBean2.active}" id="active">
+			<f:selectItem itemValue="Y" itemLabel="yes"></f:selectItem>
+			<f:selectItem itemValue="N" itemLabel="NO"></f:selectItem>
+		</h:selectOneRadio>
+			<h:commandButton value ="save" actionListener="#{productBean2.ddproduct}"></h:commandButton>
+		</h:panelGroup>
+		<h:commandButton value ="HidForm" actionListener="#{productBean2.HidFormAction}"></h:commandButton>
+	</h:form>
+</h:body>
+</html>
